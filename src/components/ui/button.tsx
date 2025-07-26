@@ -18,6 +18,9 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        circus: "bg-gradient-to-r from-red-600 to-red-700 text-yellow-400 border-2 border-yellow-400 hover:from-red-700 hover:to-red-800 hover:border-yellow-300 shadow-lg hover:shadow-xl transition-all duration-300 font-bold uppercase tracking-wide hover:scale-105",
+        ringmaster: "bg-gradient-to-r from-yellow-400 to-yellow-500 text-red-800 border-2 border-red-600 hover:from-yellow-500 hover:to-yellow-600 hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-300 font-bold uppercase tracking-wide",
+        ticket: "bg-gradient-to-r from-blue-600 to-blue-700 text-yellow-300 border-2 border-yellow-400 hover:from-blue-700 hover:to-blue-800 hover:border-yellow-300 shadow-lg hover:shadow-xl transition-all duration-300 font-bold uppercase tracking-wide",
       },
       size: {
         default: "h-10 px-4 py-2",

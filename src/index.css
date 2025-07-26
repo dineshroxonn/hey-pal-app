@@ -2,87 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* The Great Indian Circus Design System - Vintage Circus meets Government Website */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Circus Color Palette */
+    --background: 12 8% 4%;
+    --foreground: 45 100% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 12 10% 8%;
+    --card-foreground: 45 100% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 12 10% 8%;
+    --popover-foreground: 45 100% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 0 84% 60%;
+    --primary-foreground: 45 100% 95%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 45 100% 50%;
+    --secondary-foreground: 12 8% 4%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 12 15% 15%;
+    --muted-foreground: 45 30% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 220 100% 50%;
+    --accent-foreground: 45 100% 95%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 45 100% 95%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 12 20% 25%;
+    --input: 12 20% 25%;
+    --ring: 0 84% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Circus Specific Colors */
+    --circus-red: 0 84% 60%;
+    --circus-gold: 45 100% 50%;
+    --circus-blue: 220 100% 50%;
+    --circus-cream: 45 100% 95%;
+    --circus-dark: 12 8% 4%;
+    --circus-wood: 30 40% 25%;
+
+    /* Gradients */
+    --gradient-curtain: linear-gradient(135deg, hsl(var(--circus-red)), hsl(var(--circus-dark)));
+    --gradient-gold: linear-gradient(135deg, hsl(var(--circus-gold)), hsl(45 80% 40%));
+    --gradient-stage: linear-gradient(180deg, hsl(var(--circus-dark)), hsl(12 15% 15%));
+
+    /* Shadows */
+    --shadow-dramatic: 0 20px 60px -10px hsl(var(--circus-red) / 0.4);
+    --shadow-glow: 0 0 40px hsl(var(--circus-gold) / 0.3);
+    --shadow-spotlight: 0 -50px 100px hsl(var(--circus-cream) / 0.1);
+
+    /* Animations */
+    --transition-curtain: all 2s cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --background: 12 8% 4%;
+    --foreground: 45 100% 95%;
+    --card: 12 10% 8%;
+    --card-foreground: 45 100% 95%;
+    --popover: 12 10% 8%;
+    --popover-foreground: 45 100% 95%;
+    --primary: 0 84% 60%;
+    --primary-foreground: 45 100% 95%;
+    --secondary: 45 100% 50%;
+    --secondary-foreground: 12 8% 4%;
+    --muted: 12 15% 15%;
+    --muted-foreground: 45 30% 70%;
+    --accent: 220 100% 50%;
+    --accent-foreground: 45 100% 95%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 45 100% 95%;
+    --border: 12 20% 25%;
+    --input: 12 20% 25%;
+    --ring: 0 84% 60%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -101,5 +108,101 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Georgia', 'Times New Roman', serif;
+  }
+
+  /* Circus Typography */
+  .circus-title {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-shadow: 3px 3px 0px hsl(var(--circus-dark)), 
+                 6px 6px 0px hsl(var(--circus-red) / 0.3);
+  }
+
+  .circus-subtitle {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    text-shadow: 2px 2px 4px hsl(var(--circus-dark) / 0.5);
+  }
+
+  /* Custom Animations */
+  @keyframes curtain-rise {
+    0% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+
+  @keyframes spotlight-sweep {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0.3) rotate(-10deg);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.05) rotate(5deg);
+    }
+    70% {
+      transform: scale(0.9) rotate(-2deg);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+
+  .animate-curtain-rise {
+    animation: curtain-rise 2s ease-out forwards;
+  }
+
+  .animate-spotlight {
+    animation: spotlight-sweep 3s ease-in-out infinite;
+  }
+
+  .animate-bounce-in {
+    animation: bounce-in 1s ease-out forwards;
+  }
+
+  .animate-flicker {
+    animation: flicker 2s ease-in-out infinite;
+  }
+
+  /* Circus Decorative Elements */
+  .circus-border {
+    border: 3px solid hsl(var(--circus-gold));
+    border-image: repeating-linear-gradient(
+      45deg,
+      hsl(var(--circus-gold)),
+      hsl(var(--circus-gold)) 10px,
+      hsl(var(--circus-red)) 10px,
+      hsl(var(--circus-red)) 20px
+    ) 3;
+  }
+
+  .curtain-texture {
+    background: 
+      repeating-linear-gradient(
+        90deg,
+        hsl(var(--circus-red)),
+        hsl(var(--circus-red)) 2px,
+        hsl(0 84% 65%) 2px,
+        hsl(0 84% 65%) 4px
+      );
   }
 }
