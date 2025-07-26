@@ -33,7 +33,7 @@ const TokenSection = () => {
       icon: TrendingUp
     },
     {
-      title: 'Absurdity Burns',
+      title: 'Scandal Burns',
       value: 'Daily',
       description: 'Tokens burned based on real corruption news',
       icon: Zap
@@ -115,10 +115,10 @@ const TokenSection = () => {
             })}
           </div>
 
-          {/* The Absurdity Mechanism */}
+          {/* The Scandal Burn Mechanism */}
           <div className="bg-gradient-to-r from-red-900/40 to-red-800/40 border-2 border-yellow-400/50 rounded-lg p-8 mb-16">
             <h3 className="text-3xl circus-title text-yellow-400 mb-6 text-center">
-              The Absurdity Burn Mechanism
+              The Scandal Burn Mechanism
             </h3>
             
             <div className="grid md:grid-cols-2 gap-8">
