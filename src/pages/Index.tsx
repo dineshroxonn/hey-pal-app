@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
 import CurtainOpening from '@/components/CurtainOpening';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -16,13 +17,16 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background circus-cursor">
       {!showContent && (
         <CurtainOpening onAnimationComplete={handleCurtainComplete} />
       )}
       
       {showContent && (
-        <div className="animate-bounce-in">
+        <div className={cn(
+          "animate-bounce-in",
+          "selection:bg-yellow-400/20 selection:text-yellow-400"
+        )}>
           <Header />
           <Hero />
           <Ringmasters />
