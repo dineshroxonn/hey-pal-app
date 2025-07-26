@@ -1,217 +1,237 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { RevealAnimation } from '@/components/ui/reveal-animation';
-import { Crown, Users, TrendingDown, ExternalLink } from 'lucide-react';
+import { AnimatedCounter } from '@/components/ui/animated-counter';
+import { TrendingUp, AlertCircle, ChevronRight, X } from 'lucide-react';
 
 const Ringmasters = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [isPressed, setIsPressed] = useState<string | null>(null);
+  const [selectedPerformer, setSelectedPerformer] = useState<number | null>(null);
+  const [showAll, setShowAll] = useState(false);
 
-  const ringmasters = [
+  const topPerformers = [
     {
-      category: 'central',
-      title: 'The Main Act',
-      description: 'Center stage performances that captivate nationwide audiences',
-      performers: [
-        {
-          name: 'The Promise Master',
-          specialty: '2014-2024 Spectacular',
-          record: '₹15 Lakh Crore* Electoral Bonds Mystery',
-          source: 'Supreme Court, 2024',
-          achievement: 'Made transparency disappear completely'
-        },
-        {
-          name: 'The Dynasty Juggler',
-          specialty: 'Multi-Generational Act',
-          record: '1947-Present Family Business',
-          source: 'Election Commission Records',
-          achievement: 'Keeping the family name in lights for 75+ years'
-        }
-      ]
+      id: 1,
+      name: 'The Promise Master',
+      title: 'Expert in Election Magic',
+      amount: '₹15L Cr',
+      achievement: 'Made transparency disappear!',
+      details: {
+        scandal: 'Electoral Bonds - Anonymous Donations',
+        period: '2014-2024 (Still Running)',
+        impact: 'Democracy becomes pay-to-play',
+        source: 'Supreme Court Records'
+      },
+      icon: '🎩',
+      color: 'from-yellow-400 to-orange-500'
     },
     {
-      category: 'state',
-      title: 'Regional Circuses',
-      description: 'State-level productions with their own unique flavors',
-      performers: [
-        {
-          name: 'The Land Acquisition Magician',
-          specialty: 'Making Farmers Disappear',
-          record: '₹1.76 Lakh Crore Land Bank',
-          source: 'RTI Responses, Various States',
-          achievement: 'Turned agricultural land into industrial gold'
-        },
-        {
-          name: 'The Liquor License Illusionist',
-          specialty: 'Policy Transformation Tricks',
-          record: '₹8,000 Crore Scam Portfolio',
-          source: 'Delhi Excise Policy Case, CBI',
-          achievement: 'Made black money white overnight'
-        }
-      ]
+      id: 2,
+      name: 'The Land Wizard',
+      title: 'Real Estate Magic Show',
+      amount: '₹1.76L Cr',
+      achievement: 'Turned farms into goldmines!',
+      details: {
+        scandal: 'Land Acquisition Mysteries',
+        period: '2010-Present (Ongoing)',
+        impact: 'Farmers lose, builders win',
+        source: 'RTI Applications'
+      },
+      icon: '🏗️',
+      color: 'from-red-500 to-pink-500'
     },
     {
-      category: 'bureaucratic',
-      title: 'The Supporting Cast',
-      description: 'The backbone performers who keep the show running',
-      performers: [
-        {
-          name: 'The File-Moving Virtuoso',
-          specialty: 'Administrative Choreography',
-          record: '₹2,000 per signature average',
-          source: 'Transparency International India',
-          achievement: 'Perfected the art of delayed gratification'
-        },
-        {
-          name: 'The Tender Whisperer',
-          specialty: 'Procurement Performance Art',
-          record: '300% cost inflation on average',
-          source: 'CAG Reports, Multiple States',
-          achievement: 'Made ₹1 roads cost ₹4 consistently'
-        }
-      ]
+      id: 3,
+      name: 'The Mining Maestro',
+      title: 'Natural Resource Juggler',
+      amount: '₹5.68L Cr',
+      achievement: 'Made forests vanish overnight!',
+      details: {
+        scandal: 'Coal & Mining Allocation',
+        period: '2004-Present (Family Business)',
+        impact: 'Environment pays the price',
+        source: 'CAG Audit Reports'
+      },
+      icon: '⛏️',
+      color: 'from-purple-500 to-indigo-500'
     }
   ];
 
-  const categories = [
-    { id: 'all', name: 'All Acts', icon: Crown },
-    { id: 'central', name: 'Main Stage', icon: Users },
-    { id: 'state', name: 'Regional Shows', icon: TrendingDown },
-    { id: 'bureaucratic', name: 'Supporting Cast', icon: ExternalLink }
-  ];
+  const totalScandals = 420; // Meme number!
 
-  const filteredRingmasters = selectedCategory === 'all' 
-    ? ringmasters 
-    : ringmasters.filter(rm => rm.category === selectedCategory);
-
-  const handleButtonPress = (buttonId: string) => {
-    setIsPressed(buttonId);
-    setTimeout(() => setIsPressed(null), 150);
-  };
   return (
-    <section id="ringmasters" className="py-20 bg-gradient-to-b from-black to-red-950 relative">
-      <div className="container mx-auto px-4">
+    <section id="ringmasters" className="py-20 bg-gradient-to-b from-black to-red-950 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-yellow-400 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-red-600 rounded-full blur-3xl animate-pulse delay-700" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
-          {/* Section Header */}
+          
+          {/* Simplified Header */}
           <RevealAnimation>
-            <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-6xl circus-title text-yellow-400 mb-6">
-                Meet Your Ringmasters
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl circus-title text-yellow-400 mb-4">
+                Meet Your Star Performers
               </h2>
-              <p className="text-xl text-yellow-200 max-w-3xl mx-auto leading-relaxed">
-                The talented individuals who have perfected the art of governance as entertainment. 
-                Each performance is backed by official records and verifiable sources.
+              <p className="text-lg text-yellow-200 max-w-2xl mx-auto">
+                The talented folks who've perfected the art of <span className="text-red-400 font-bold">public service magic</span>
+                <br />
+                <span className="text-base italic">- Sponsored by Your Tax Money™</span>
               </p>
             </div>
           </RevealAnimation>
 
-          {/* Category Filter */}
+          {/* Quick Stats Bar */}
           <RevealAnimation delay={200}>
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-              {categories.map((category) => {
-                const IconComponent = category.icon;
-                return (
-                  <Button
-                    key={category.id}
-                    variant={selectedCategory === category.id ? "ringmaster" : "outline"}
-                    onClick={() => {
-                      handleButtonPress(category.id);
-                      setSelectedCategory(category.id);
-                    }}
-                    className={`flex items-center gap-2 transition-all duration-150 ${
-                      isPressed === category.id ? 'animate-button-press' : ''
-                    }`}
-                  >
-                    <IconComponent className="w-4 h-4" />
-                    {category.name}
-                  </Button>
-                );
-              })}
+            <div className="bg-gradient-to-r from-red-900/60 to-red-800/60 backdrop-blur-sm border-2 border-yellow-400/50 rounded-lg p-6 mb-12">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+                <div>
+                  <div className="text-3xl font-bold text-yellow-400">
+                    <AnimatedCounter end={totalScandals} />
+                  </div>
+                  <div className="text-yellow-200 text-sm">Major Scams<br/><span className="text-xs">(Just the tip of iceberg)</span></div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-red-400">
+                    ₹<AnimatedCounter end={23} suffix=".2L Cr" />
+                  </div>
+                  <div className="text-yellow-200 text-sm">Total Value<br/><span className="text-xs">(That we know of)</span></div>
+                </div>
+                <div className="hidden md:block">
+                  <div className="text-3xl font-bold text-yellow-400">365/24/7</div>
+                  <div className="text-yellow-200 text-sm">Non-Stop Show<br/><span className="text-xs">(No breaks, no intermission)</span></div>
+                </div>
+              </div>
             </div>
           </RevealAnimation>
 
-          {/* Ringmaster Categories */}
-          <div className="space-y-12">
-            {filteredRingmasters.map((category, categoryIndex) => (
-              <RevealAnimation key={categoryIndex} delay={400 + categoryIndex * 200}>
-                <div className="bg-gradient-to-r from-red-900/40 to-red-800/40 border-2 border-yellow-400/50 rounded-lg p-8 backdrop-blur-sm hover:shadow-lg hover:shadow-yellow-400/10 transition-all duration-300">
-                  <div className="mb-8">
-                    <h3 className="text-3xl circus-title text-yellow-400 mb-3">
-                      {category.title}
+          {/* Top 3 Performers - Card Based */}
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            {topPerformers.map((performer, index) => (
+              <RevealAnimation key={performer.id} delay={300 + index * 100}>
+                <div 
+                  className={`relative bg-gradient-to-br ${performer.color} p-[2px] rounded-xl cursor-pointer transform transition-all duration-300 hover:scale-105`}
+                  onClick={() => setSelectedPerformer(performer.id)}
+                >
+                  <div className="bg-black/90 backdrop-blur-sm rounded-xl p-6 h-full">
+                    {/* Icon and Amount */}
+                    <div className="flex justify-between items-start mb-4">
+                      <span className="text-4xl">{performer.icon}</span>
+                      <span className="text-2xl font-bold text-red-400">{performer.amount}</span>
+                    </div>
+                    
+                    {/* Name and Title */}
+                    <h3 className="text-xl font-bold text-yellow-400 mb-1">
+                      {performer.name}
                     </h3>
-                    <p className="text-yellow-200 text-lg italic">
-                      {category.description}
+                    <p className="text-yellow-200 text-sm mb-3">{performer.title}</p>
+                    
+                    {/* Achievement */}
+                    <p className="text-yellow-300 italic text-sm mb-4">
+                      "{performer.achievement}"
                     </p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {category.performers.map((performer, performerIndex) => (
-                      <div 
-                        key={performerIndex} 
-                        className="bg-gradient-to-b from-yellow-400/10 to-red-600/10 border border-yellow-400/30 rounded-lg p-6 hover:animate-card-hover transition-all duration-300 cursor-pointer group"
-                      >
-                        <div className="mb-4">
-                          <h4 className="text-xl font-bold text-yellow-400 mb-2 group-hover:text-yellow-300 transition-colors">
-                            {performer.name}
-                          </h4>
-                          <p className="text-yellow-300 font-medium italic">
-                            {performer.specialty}
-                          </p>
-                        </div>
-
-                        <div className="space-y-3">
-                          <div>
-                            <span className="text-red-400 font-bold text-lg">Record Performance: </span>
-                            <span className="text-yellow-200">{performer.record}</span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <span className="text-gray-400 text-sm">Source: </span>
-                              <span className="text-gray-300 text-sm font-medium">{performer.source}</span>
-                            </div>
-                            <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-yellow-400 transition-colors" />
-                          </div>
-                          
-                          <div className="pt-3 border-t border-yellow-400/20">
-                            <span className="text-yellow-400 font-medium">Signature Achievement: </span>
-                            <span className="text-yellow-200 italic">{performer.achievement}</span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                    
+                    {/* CTA */}
+                    <button className="flex items-center text-yellow-400 text-sm hover:text-yellow-300 transition-colors">
+                      <span>See full story</span>
+                      <ChevronRight className="w-4 h-4 ml-1" />
+                    </button>
                   </div>
                 </div>
               </RevealAnimation>
             ))}
           </div>
 
+          {/* View More Button */}
+          <RevealAnimation delay={600}>
+            <div className="text-center">
+              <Button
+                variant="outline"
+                onClick={() => setShowAll(!showAll)}
+                className="border-yellow-400 text-yellow-400 hover:bg-yellow-400/20"
+              >
+                {showAll ? 'Show Less' : 'View All 420 Performers'}
+              </Button>
+            </div>
+          </RevealAnimation>
+
           {/* Call to Action */}
-          <RevealAnimation delay={800}>
-            <div className="text-center mt-16">
-              <div className="bg-gradient-to-r from-yellow-400/20 to-red-600/20 border-2 border-yellow-400 rounded-lg p-8 backdrop-blur-sm">
-                <h3 className="text-2xl circus-title text-yellow-400 mb-4">
-                  Want to See More Acts?
-                </h3>
-                <p className="text-yellow-200 mb-6">
-                  This is just the opening show. Hold your $40PCT tokens for exclusive access to 
-                  behind-the-scenes footage and insider documentation.
-                </p>
-                <Button 
-                  variant="ticket" 
-                  size="lg"
-                  className={`transition-all duration-150 ${
-                    isPressed === 'vip-access' ? 'animate-button-press' : ''
-                  }`}
-                  onClick={() => handleButtonPress('vip-access')}
-                >
-                  Get VIP Access with $40PCT
-                </Button>
+          <RevealAnimation delay={700}>
+            <div className="mt-12 text-center">
+              <div className="inline-flex items-center gap-2 bg-red-900/50 border border-red-400 rounded-full px-6 py-3">
+                <AlertCircle className="w-5 h-5 text-red-400" />
+                <span className="text-yellow-200">
+                  Breaking: New scandals daily! Get <span className="font-bold">$40PCT</span> tokens for exclusive updates!
+                </span>
               </div>
+              <p className="text-yellow-400/70 text-xs mt-2">
+                "Yesterday's news is today's forgotten scandal" 📰
+              </p>
             </div>
           </RevealAnimation>
         </div>
       </div>
+
+      {/* Detail Modal */}
+      {selectedPerformer && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setSelectedPerformer(null)}>
+          <RevealAnimation>
+            <div className="bg-gradient-to-br from-red-900 to-red-950 border-2 border-yellow-400 rounded-xl p-8 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+              <button
+                onClick={() => setSelectedPerformer(null)}
+                className="absolute top-4 right-4 text-yellow-400 hover:text-yellow-300"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              {(() => {
+                const performer = topPerformers.find(p => p.id === selectedPerformer);
+                if (!performer) return null;
+                
+                return (
+                  <>
+                    <div className="text-4xl mb-4">{performer.icon}</div>
+                    <h3 className="text-2xl circus-title text-yellow-400 mb-4">
+                      {performer.name}
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <span className="text-red-400 font-bold">The Act:</span>
+                        <span className="text-yellow-200 ml-2">{performer.details.scandal}</span>
+                      </div>
+                      <div>
+                        <span className="text-red-400 font-bold">Show Duration:</span>
+                        <span className="text-yellow-200 ml-2">{performer.details.period}</span>
+                      </div>
+                      <div>
+                        <span className="text-red-400 font-bold">Impact:</span>
+                        <span className="text-yellow-200 ml-2">{performer.details.impact}</span>
+                      </div>
+                      <div>
+                        <span className="text-red-400 font-bold">Evidence:</span>
+                        <span className="text-yellow-200 ml-2 text-sm">{performer.details.source}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 text-center">
+                      <Button variant="circus" size="sm">
+                        <TrendingUp className="w-4 h-4 mr-2" />
+                        Track this scandal
+                      </Button>
+                      <p className="text-yellow-400/60 text-xs mt-2">
+                        "The show must go on!"
+                      </p>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+          </RevealAnimation>
+        </div>
+      )}
     </section>
   );
 };

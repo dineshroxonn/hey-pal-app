@@ -9,9 +9,9 @@ const Hero = () => {
   const [isPressed, setIsPressed] = useState<string | null>(null);
 
   const stats = [
-    { icon: TrendingUp, label: '40% Corruption Rate', value: 'Official', counter: 40, suffix: '%' },
-    { icon: Users, label: '1.4B Audience', value: 'Captive', counter: 1.4, suffix: 'B' },
-    { icon: Zap, label: '₹40PCT Token', value: 'Your Ticket', counter: 40, suffix: 'PCT' },
+    { icon: TrendingUp, label: 'Official Rate', value: 'Corruption Index', counter: 40, suffix: '%' },
+    { icon: Users, label: 'Total Audience', value: '1.4B Citizens', counter: 1.4, suffix: 'B' },
+    { icon: Zap, label: '₹40PCT Token', value: 'Your Voice', counter: 40, suffix: 'PCT' },
   ];
 
   const handleButtonPress = (buttonId: string) => {
@@ -33,14 +33,16 @@ const Hero = () => {
           <RevealAnimation delay={200}>
             <div className="mb-12">
               <h1 className="text-6xl md:text-8xl lg:text-9xl circus-title text-yellow-400 mb-6 leading-tight">
-                Welcome to the
-                <span className="block text-red-500 mt-2">Greatest Show</span>
-                <span className="block text-yellow-400 mt-2">on Earth!</span>
+                Welcome to
+                <span className="block text-red-500 mt-2">India's Biggest</span>
+                <span className="block text-yellow-400 mt-2">Political Circus! 🎪</span>
               </h1>
               <p className="text-xl md:text-2xl circus-subtitle text-yellow-200 max-w-4xl mx-auto leading-relaxed">
-                Step right up to witness the most spectacular display of democracy in action! 
-                Where every scandal is a sideshow, every promise is a magic trick, 
-                and every citizen gets a front-row seat to the circus.
+                Where every <span className="text-red-400 font-bold">promise is a performance</span>, 
+                every <span className="text-yellow-400 font-bold">speech is a show</span>, 
+                and every election is a <span className="text-red-400 font-bold">blockbuster event</span>! 
+                <br />
+                <span className="text-lg italic">"Same story, different actors" - Every Election Ever</span>
               </p>
             </div>
           </RevealAnimation>
@@ -49,10 +51,12 @@ const Hero = () => {
           <RevealAnimation delay={400}>
             <div className="bg-gradient-to-r from-red-900/80 to-red-800/80 border-4 border-yellow-400 rounded-lg p-8 mb-12 backdrop-blur-sm animate-gentle-pulse">
               <h2 className="text-3xl md:text-4xl circus-title text-yellow-400 mb-4 animate-subtle-glow">
-                "40% of India is the Official Corruption Rate"
+                "40% Corruption Rate - Officially Certified!"
               </h2>
               <p className="text-lg md:text-xl text-yellow-200 italic">
-                But who's counting? We are! And we're making it entertaining.
+                And that's just what they admit! 😉
+                <br />
+                <span className="text-base">Source: Public Records + Common Sense</span>
               </p>
             </div>
           </RevealAnimation>
@@ -95,7 +99,7 @@ const Hero = () => {
                   }}
                 >
                   <Play className="w-6 h-6 mr-2" />
-                  Enter the Circus
+                  Watch the Show!
                 </Button>
                 <Button 
                   variant="ticket" 
@@ -105,21 +109,31 @@ const Hero = () => {
                   }`}
                   onClick={() => handleButtonPress('buy-tokens')}
                 >
-                  Buy $40PCT Tokens
+                  Get ₹40PCT Tokens
                 </Button>
               </div>
               
               <p className="text-yellow-300 text-sm max-w-2xl mx-auto">
-                <strong>Disclaimer:</strong> This is a satirical platform. No actual democracy was harmed in the making of this circus. 
-                Side effects may include: increased awareness, uncontrollable laughter, and a sudden urge to vote responsibly.
+                <strong>Disclaimer:</strong> This is a satirical platform. We make fun of the system, not the people. 
+                <br />
+                Side effects may include: Increased awareness, uncontrollable laughter, and a desire for better governance.
               </p>
+            </div>
+          </RevealAnimation>
+
+          {/* Meme-worthy one-liners */}
+          <RevealAnimation delay={1200}>
+            <div className="mt-12 space-y-2 text-yellow-400/70 text-sm">
+              <p>"Politicians change, promises remain the same" 🔄</p>
+              <p>"Election season = Entertainment season" 🎭</p>
+              <p>"Your vote matters... until the next scandal" 🗳️</p>
             </div>
           </RevealAnimation>
         </div>
       </div>
 
       {/* Decorative Bottom Border */}
-      <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-r from-yellow-400 via-red-600 via-yellow-400 via-red-600 to-yellow-400 opacity-80" />
+      <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-r from-yellow-400 via-red-600 to-yellow-400 opacity-80" />
     </section>
   );
 };
