@@ -163,7 +163,7 @@ const Ringmasters = () => {
               <div className="inline-flex items-center gap-2 bg-red-900/50 border border-red-400 rounded-full px-6 py-3">
                 <AlertCircle className="w-5 h-5 text-red-400" />
                 <span className="text-yellow-200">
-                  Breaking: New scandals daily! Get <span className="font-bold">$40PCT</span> tokens for exclusive updates!
+                  Breaking: New scandals daily. See your state's ringmasters below ↓
                 </span>
               </div>
               <p className="text-yellow-400/70 text-xs mt-2">
