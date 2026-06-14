@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
@@ -11,11 +12,11 @@ const Header = () => {
   const [isPressed, setIsPressed] = useState<string | null>(null);
 
   const navItems = [
-    { name: 'The Show', href: '#show' },
-    { name: 'Ringmasters', href: '#ringmasters' },
-    { name: 'Silent Partners', href: '#partners' },
-    { name: 'The Audience', href: '#audience' },
-    { name: '$40PCT Token', href: '#token' },
+    { name: 'The Show', href: '/#show', internal: true },
+    { name: 'Ringmasters', href: '/#ringmasters', internal: true },
+    { name: 'Silent Partners', href: '/#partners', internal: true },
+    { name: 'The Audience', href: '/#audience', internal: true },
+    { name: 'Sources', href: '/sources', internal: false },
   ];
 
   const handleButtonPress = (buttonId: string) => {
@@ -57,24 +58,26 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="nav-link text-yellow-300 hover:text-yellow-400 transition-colors duration-300 font-medium uppercase tracking-wide text-sm"
-              >
-                {item.name}
-              </a>
+              item.internal ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="nav-link text-yellow-300 hover:text-yellow-400 transition-colors duration-300 font-medium uppercase tracking-wide text-sm"
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="nav-link text-yellow-300 hover:text-yellow-400 transition-colors duration-300 font-medium uppercase tracking-wide text-sm"
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
-            <Button 
-              variant="ticket" 
-              size="sm"
-              className={cn(
-                "transition-all duration-150",
-                isPressed === 'buy-tickets' && "animate-button-press"
-              )}
-              onClick={() => handleButtonPress('buy-tickets')}
-            >
-              Buy Tickets
+            <Button variant="ticket" size="sm" asChild>
+              <Link to="/report">Report Corruption</Link>
             </Button>
           </nav>
 
@@ -90,33 +93,33 @@ const Header = () => {
         {/* Mobile Navigation */}
         <div className={cn(
           "md:hidden border-t border-yellow-400/30 transition-all duration-300 ease-out overflow-hidden",
-          isMenuOpen ? "max-h-96 py-4 opacity-100" : "max-h-0 py-0 opacity-0"
+          {isMenuOpen ? "max-h-96 py-4 opacity-100" : "max-h-0 py-0 opacity-0"}
         )}>
             <nav className="flex flex-col space-y-3">
               {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-yellow-300 hover:text-yellow-400 transition-all duration-300 font-medium uppercase tracking-wide text-sm py-2 hover:translate-x-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
+                item.internal ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-yellow-300 hover:text-yellow-400 transition-all duration-300 font-medium uppercase tracking-wide text-sm py-2 hover:translate-x-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-yellow-300 hover:text-yellow-400 transition-all duration-300 font-medium uppercase tracking-wide text-sm py-2 hover:translate-x-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
               ))}
               <div className="pt-2">
-                <Button 
-                  variant="ticket" 
-                  size="sm" 
-                  className={cn(
-                    "w-full transition-all duration-150",
-                    isPressed === 'mobile-buy-tickets' && "animate-button-press"
-                  )}
-                  onClick={() => {
-                    handleButtonPress('mobile-buy-tickets');
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  Buy Tickets
+                <Button variant="ticket" size="sm" className="w-full" asChild>
+                  <Link to="/report" onClick={() => setIsMenuOpen(false)}>Report Corruption</Link>
                 </Button>
               </div>
             </nav>
