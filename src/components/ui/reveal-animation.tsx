@@ -44,7 +44,7 @@ export const RevealAnimation = ({
 
   return (
     <div
-      ref={ref}
+      ref={ref as React.RefObject<HTMLDivElement>}
       className={cn(getTransformClasses(), className)}
       style={{ transitionDelay: `${delay}ms` }}
     >
