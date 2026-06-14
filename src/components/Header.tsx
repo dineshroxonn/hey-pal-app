@@ -93,7 +93,7 @@ const Header = () => {
         {/* Mobile Navigation */}
         <div className={cn(
           "md:hidden border-t border-yellow-400/30 transition-all duration-300 ease-out overflow-hidden",
-          {isMenuOpen ? "max-h-96 py-4 opacity-100" : "max-h-0 py-0 opacity-0"}
+          isMenuOpen ? "max-h-96 py-4 opacity-100" : "max-h-0 py-0 opacity-0"
         )}>
             <nav className="flex flex-col space-y-3">
               {navItems.map((item) => (
