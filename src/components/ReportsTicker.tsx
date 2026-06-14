@@ -10,6 +10,7 @@ interface Report {
   category: string;
   description: string;
   created_at: string;
+  status?: string;
 }
 
 const CATEGORY_EMOJI: Record<string, string> = {

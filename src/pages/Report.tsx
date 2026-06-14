@@ -52,6 +52,7 @@ interface ReportRow {
   amount: number | null;
   upvotes: number;
   created_at: string;
+  status?: string;
 }
 
 function ClickHandler({ onPick }: { onPick: (lat: number, lng: number) => void }) {
@@ -121,7 +122,12 @@ export default function ReportPage() {
     const { error } = await supabase.from('reports').insert({
       lat: pickedPos.lat,
       lng: pickedPos.lng,
-      ...parsed.data,
+      category: parsed.data.category,
+      description: parsed.data.description,
+      state: parsed.data.state,
+      city: parsed.data.city,
+      office_name: parsed.data.office_name,
+      amount: parsed.data.amount,
       status: 'approved',
     });
     setSubmitting(false);
