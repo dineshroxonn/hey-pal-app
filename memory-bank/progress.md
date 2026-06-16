@@ -1,21 +1,24 @@
-# Progress: Hey Pal App
+# Progress: The Great Indian Circus
 
 ## What Works
-
-*   **Core Application Shell:** The main application shell is functional, including routing and the initial `CurtainOpening` animation.
-*   **Component Structure:** All the main thematic components are present and composed correctly on the `Index` page.
-*   **UI Library:** The `shadcn/ui` component library is integrated and provides a consistent set of UI elements.
+- **Intro flow:** lazy-loaded Three.js globe → curtain → content, gated by sessionStorage.
+- **State explorer:** `RingmasterMap` tent grid, search (state/capital/politician/party), `StateDrawer` dossiers, stub states.
+- **Report map:** Leaflet map, click-to-drop-pin, Zod-validated form, submission via the `submit-report` edge function, realtime updates.
+- **Homepage ticker** and **`/sources`** methodology page.
+- **Build** is green; **ESLint errors are at 0** (only inherited shadcn fast-refresh warnings remain).
+- **Bundle:** Three.js and Leaflet are code-split out of the initial chunk.
+- **Resilience:** Supabase env guard prevents white-screening without credentials.
 
 ## What's Left to Build
-
-*   **Component Content:** The content and specific logic within each thematic component need to be analyzed to determine if they are placeholders or complete.
-*   **State Management and Data Fetching:** The use of `@tanstack/react-query` needs to be investigated to understand what data is being fetched and how it's used.
-*   **User Interactivity:** The interactivity of the application, such as form submissions or button clicks, needs to be examined.
+- Live data scrapers (MyNeta / ADR / PRS) to replace illustrative figures in `src/data/states.ts`.
+- Persisted upvotes (currently optimistic/local only — needs a `report_upvotes` table).
+- Photo uploads (Supabase Storage bucket + `photo_url`).
+- Moderation (flag-threshold hiding, profanity filter) and map marker clustering.
 
 ## Current Status
+v2 is built and hardened. Core UX, the explorer, and the reporting pipeline are functional end-to-end.
 
-The project is in an initial analysis phase. The core structure is in place, but the completeness of the features and functionality is yet to be determined.
-
-## Known Issues
-
-*   No known issues at this time. This section will be updated as the codebase is explored in more detail.
+## Known Issues / Notes
+- Politician/state numbers are **illustrative placeholders**, not verified data (by design, pending scrapers).
+- The `submit-report` edge function **and** the hardening migration must be deployed together for submissions to work; reads (ticker/map) are unaffected if they aren't.
+- Repo carries both `package-lock.json` (npm) and a legacy `bun.lockb`.

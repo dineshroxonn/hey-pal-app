@@ -1,20 +1,20 @@
-# Project Brief: Hey Pal App
+# Project Brief: The Great Indian Circus
 
 ## Core Requirements & Goals
 
-"The Great Indian Circus" is a satirical web application that uses a circus theme to comment on Indian politics. Built with React, TypeScript, and Vite, its primary goal is to raise awareness about political issues and corruption in an engaging, humorous way. The project is structured around different "performers" (stakeholders) and features a native token, `$40PCT`, which is a play on the "40% corruption rate" theme.
+"The Great Indian Circus" is a satirical, evidence-styled web application that uses a circus metaphor to comment on Indian politics. Its goal is to make public-record political data engaging *and* to let citizens crowdsource what they see on the ground. It is built around two real tools:
 
-## Key Features (Inferred)
+1. **A state / politician explorer** — browse states ("tents") and their politicians ("ringmasters"), with assets, criminal cases, attendance, and a satirical "Drama Score".
+2. **A crowdsourced corruption-report map** — an anonymous `/report` page where anyone can drop a pin describing corruption; recent reports stream live on the homepage.
 
-*   **Modern UI:** The use of React, TypeScript, and Tailwind CSS suggests a focus on a modern, responsive, and maintainable user interface.
-*   **Component-Based Architecture:** The project is structured around reusable components, which will help in maintaining a consistent look and feel across the application.
-*   **Clear Navigation:** The presence of `Header`, `Footer`, and a `pages` directory indicates a standard multi-page web application structure.
-*   **Thematic Content:** Components like `Ringmasters`, `SilentPartners`, and `TheAudience` suggest a unique, possibly circus-themed, presentation of content.
+> History: the project began as a `$40PCT` Solana meme-token site. That crypto concept was **fully removed** in the v2 rebuild (`.lovable/plan.md`); the circus theme was kept.
 
 ## Technical Stack
-
-*   **Framework:** React
-*   **Language:** TypeScript
-*   **Build Tool:** Vite
-*   **Styling:** Tailwind CSS
-*   **Package Manager:** bun
+- **Framework:** React 18 + TypeScript
+- **Build Tool:** Vite (SWC)
+- **Styling:** Tailwind CSS + shadcn/ui
+- **Routing:** React Router v6
+- **3D / Maps:** Three.js (`@react-three/fiber`) for the intro globe; Leaflet for the report map
+- **Backend:** Supabase (reports table, realtime, `submit-report` edge function)
+- **Validation:** Zod
+- **Package Manager:** npm (`package-lock.json`; a legacy `bun.lockb` also exists)

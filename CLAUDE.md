@@ -11,37 +11,51 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
 
+## What this app is
+
+"The Great Indian Circus" is a satirical, evidence-styled atlas of Indian politics built around two real tools under a circus theme (red/gold/black, Impact font, "ringmaster" voice):
+
+1. **State / politician explorer** — `RingmasterMap` + `StateDrawer`, seeded from `src/data/states.ts` (politicians as "ringmasters", states as "tents", a satirical "Drama Score").
+2. **Crowdsourced corruption-report map** — the `/report` page (Leaflet + Supabase): anyone can anonymously drop a pin describing corruption; recent reports stream on the homepage ticker.
+
+> History: an earlier version was a `$40PCT` Solana meme-token site. That concept was **fully removed** during the v2 rebuild (see `.lovable/plan.md`). Do **not** reintroduce token/crypto features.
+
 ## Architecture
 
 ### Tech Stack
-- **Framework**: React 18 with TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS with shadcn/ui components
-- **State Management**: React Query (TanStack Query)
+- **Framework**: React 18 + TypeScript
+- **Build Tool**: Vite (SWC plugin)
+- **Styling**: Tailwind CSS + shadcn/ui (Radix primitives)
 - **Routing**: React Router v6
-- **Form Handling**: React Hook Form with Zod validation
-- **Animation**: Framer Motion
+- **3D**: Three.js via `@react-three/fiber` + `@react-three/drei` (globe intro)
+- **Maps**: Leaflet + `react-leaflet` (report map, free OSM tiles)
+- **Backend**: Supabase (`@supabase/supabase-js`) — reports table + realtime + edge function
+- **Forms/validation**: Zod
+- **Data fetching**: a TanStack Query provider is mounted in `App.tsx` but is currently unused — the two data calls use the Supabase client directly. Kept for future use.
 
 ### Project Structure
-- `/src/components/` - React components including custom UI components and shadcn/ui library
-- `/src/pages/` - Page components (Index, NotFound)
-- `/src/hooks/` - Custom React hooks (intersection observer, mobile detection, scroll position, toast)
-- `/src/lib/` - Utilities (mainly cn() for className merging)
-- `/memory-bank/` - Project documentation and context files
+- `/src/components/` - Feature components (`CircusGlobe`, `CurtainOpening`, `Header`, `Hero`, `ReportsTicker`, `RingmasterMap`, `StateDrawer`, `SilentPartners`, `TheAudience`, `Footer`) plus the shadcn/ui library in `/src/components/ui/`
+- `/src/pages/` - `Index`, `Report`, `Sources`, `NotFound`
+- `/src/data/states.ts` - Curated state/politician seed data (illustrative until live data is wired in)
+- `/src/integrations/supabase/` - Client (`client.ts`) and generated `types.ts`
+- `/src/hooks/`, `/src/lib/` - Custom hooks and the `cn()` utility
+- `/supabase/` - `config.toml`, `migrations/`, and `functions/submit-report/`
+- `/memory-bank/` - Project documentation
 
 ### Key Architectural Patterns
+1. **Homepage intro flow**: `Index.tsx` is a phase state machine `globe → curtain → content`, gated by `sessionStorage('circus_intro_seen')` so it plays once per session. `CircusGlobe` is lazy-loaded (heavy Three.js); `/report` and `/sources` are lazy routes — this keeps Three.js and Leaflet out of the initial bundle.
+2. **Path Aliases**: `@/` maps to `./src/`.
+3. **TypeScript**: relaxed config (no-implicit-any off, unused allowed, strict null checks disabled).
+4. **UI Library**: shadcn/ui components under `/src/components/ui/`.
+5. **Theming**: CSS-variable theme in `src/index.css` integrated with Tailwind. Animations are CSS keyframes plus a custom IntersectionObserver-based `RevealAnimation` — there is **no** `framer-motion`.
+6. **Dev server**: port 8080, host `::` (IPv6).
 
-1. **Component Architecture**: The app uses a component-based structure with a curtain opening animation that reveals the main content. The Index page orchestrates multiple themed sections (Hero, Ringmasters, SilentPartners, TheAudience, TokenSection).
-
-2. **Path Aliases**: Uses `@/` alias for `./src/` directory imports throughout the codebase.
-
-3. **TypeScript Configuration**: Configured with relaxed type checking (no implicit any, unused parameters/locals allowed, strict null checks disabled).
-
-4. **UI Component Library**: Extensive use of shadcn/ui components with Radix UI primitives. All UI components are in `/src/components/ui/`.
-
-5. **Theming**: CSS variables-based theming system integrated with Tailwind CSS. The app appears to be "The Great Indian Circus" - a satirical web application commenting on Indian politics with a circus theme.
-
-6. **Development Server**: Configured to run on port 8080 with IPv6 support (host: "::").
+### Backend (Supabase)
+- Single `reports` table. RLS: anyone may **SELECT** `approved` reports; direct **INSERT** by `anon`/`authenticated` is **revoked**.
+- All report writes go through the **`submit-report` edge function** (input validation + per-IP rate limiting via the service role). The client calls `supabase.functions.invoke('submit-report', …)`.
+- Realtime `postgres_changes` INSERT subscriptions power the homepage ticker and the live map.
+- Requires env vars `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` (see `.env.example`). The client falls back to inert placeholders if they're missing, so the UI still renders (reports just stay empty).
+- Migrations and the edge function live under `/supabase` and are deployed by Lovable on sync. **The migration + edge function must be deployed together for submissions to work** — reads are unaffected.
 
 ### Important Context
-This is a Lovable project (created on lovable.dev) with automatic GitHub syncing. The project uses a circus theme to present political satire, featuring a native token called `$40PCT` (referring to "40% corruption rate").
+This is a Lovable project (created on lovable.dev) with automatic GitHub syncing. Politician/state figures are **illustrative/satirical placeholders** pending live data (MyNeta, ADR, ECI, PRS India, CAG). Crowdsourced `/report` entries are real and anonymous. Disclaimers and the `/sources` methodology page back the satire — keep them intact.

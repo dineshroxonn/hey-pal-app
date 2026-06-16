@@ -31,6 +31,8 @@ const CATEGORIES = [
   { value: 'other', label: '🎪 Other' },
 ] as const;
 
+type Category = (typeof CATEGORIES)[number]['value'];
+
 const reportSchema = z.object({
   category: z.enum(['bribe', 'ghost_project', 'missing_funds', 'harassment', 'red_tape', 'other']),
   state: z.string().trim().max(80).optional(),
@@ -67,8 +69,16 @@ function ClickHandler({ onPick }: { onPick: (lat: number, lng: number) => void }
 export default function ReportPage() {
   const [reports, setReports] = useState<ReportRow[]>([]);
   const [pickedPos, setPickedPos] = useState<{ lat: number; lng: number } | null>(null);
-  const [form, setForm] = useState({
-    category: 'bribe' as const,
+  const [form, setForm] = useState<{
+    category: Category;
+    state: string;
+    city: string;
+    office_name: string;
+    description: string;
+    amount: string;
+    honey: string;
+  }>({
+    category: 'bribe',
     state: '', city: '', office_name: '', description: '', amount: '',
     honey: '', // honeypot
   });
@@ -119,21 +129,37 @@ export default function ReportPage() {
     }
 
     setSubmitting(true);
-    const { error } = await supabase.from('reports').insert({
-      lat: pickedPos.lat,
-      lng: pickedPos.lng,
-      category: parsed.data.category,
-      description: parsed.data.description,
-      state: parsed.data.state,
-      city: parsed.data.city,
-      office_name: parsed.data.office_name,
-      amount: parsed.data.amount,
-      status: 'approved',
+    // Submissions go through the rate-limited `submit-report` edge function —
+    // direct inserts into the table are no longer permitted (see migration).
+    const { error } = await supabase.functions.invoke('submit-report', {
+      body: {
+        lat: pickedPos.lat,
+        lng: pickedPos.lng,
+        category: parsed.data.category,
+        description: parsed.data.description,
+        state: parsed.data.state,
+        city: parsed.data.city,
+        office_name: parsed.data.office_name,
+        amount: parsed.data.amount,
+        honey: form.honey,
+      },
     });
     setSubmitting(false);
 
     if (error) {
-      toast.error('Could not submit. Try again.');
+      // FunctionsHttpError carries the original Response on `.context`; surface
+      // the server's message (rate-limit / validation) when we can read it.
+      let message = 'Could not submit. Try again.';
+      const context = (error as { context?: Response }).context;
+      if (context && typeof context.json === 'function') {
+        try {
+          const body = await context.json();
+          if (body?.error) message = body.error;
+        } catch {
+          /* keep the default message */
+        }
+      }
+      toast.error(message);
       console.error(error);
       return;
     }
@@ -243,7 +269,7 @@ export default function ReportPage() {
             <Field label="Category">
               <select
                 value={form.category}
-                onChange={e => setForm({ ...form, category: e.target.value as any })}
+                onChange={e => setForm({ ...form, category: e.target.value as Category })}
                 className="w-full bg-black border border-yellow-400/40 rounded px-3 py-2 text-yellow-100"
               >
                 {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}

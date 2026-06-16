@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
-import CircusGlobe from '@/components/CircusGlobe';
 import CurtainOpening from '@/components/CurtainOpening';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -11,6 +10,10 @@ import TheAudience from '@/components/TheAudience';
 import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
+
+// Three.js globe is the heaviest dependency on the site; load it only when the
+// intro actually plays (first visit, before sessionStorage marks it as seen).
+const CircusGlobe = lazy(() => import('@/components/CircusGlobe'));
 
 type Phase = 'globe' | 'curtain' | 'content';
 
@@ -28,7 +31,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background circus-cursor">
       {phase === 'globe' && (
-        <CircusGlobe onComplete={() => setPhase('curtain')} />
+        <Suspense fallback={<div className="fixed inset-0 z-50 bg-black" />}>
+          <CircusGlobe onComplete={() => setPhase('curtain')} />
+        </Suspense>
       )}
       {phase === 'curtain' && (
         <CurtainOpening onAnimationComplete={() => setPhase('content')} />

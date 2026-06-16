@@ -1,5 +1,5 @@
 import { StateData } from '@/data/states';
-import { X, Users, AlertTriangle, Briefcase, TrendingUp } from 'lucide-react';
+import { X, Users, AlertTriangle, Briefcase, TrendingUp, type LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -116,7 +116,7 @@ export default function StateDrawer({ state, onClose }: Props) {
   );
 }
 
-function StatBox({ icon: Icon, label, value }: { icon: any; label: string; value: string }) {
+function StatBox({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return (
     <div className="bg-gradient-to-br from-yellow-400/10 to-red-600/10 border border-yellow-400/40 rounded p-3 text-center">
       <Icon className="w-5 h-5 text-yellow-400 mx-auto mb-1" />
