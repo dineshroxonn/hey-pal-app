@@ -1,18 +1,21 @@
-# Active Context: Hey Pal App
+# Active Context: The Great Indian Circus
 
 ## Current Work Focus
 
-The current focus is on conducting a thorough analysis of the existing codebase to build a comprehensive understanding of the project. This involves:
-
-*   Mapping out the component hierarchy.
-*   Understanding the data flow and state management.
-*   Identifying key patterns and conventions used throughout the application.
+Post-rebuild **hardening and cleanup** of the v2 app:
+- Refreshed all project docs (`CLAUDE.md` + `memory-bank/`) to match the actual app.
+- Removed dead code (`Ringmasters.tsx`, unused `ui/chart.tsx`) and unused deps (`framer-motion`, `recharts`, `intersection-observer`); fixed ESLint errors.
+- Added a Supabase **env guard** so the site degrades gracefully instead of white-screening when credentials are absent.
+- **Code-split** the heavy Three.js globe and the `/report` (Leaflet) + `/sources` routes out of the initial bundle.
+- Added the missing **`submit-report` edge function** (validation + per-IP rate limit) and a migration that revokes direct anonymous INSERTs, closing the open-write-endpoint gap.
 
 ## Recent Changes
-
-*   **Memory Bank Initiated:** The `memory-bank` directory and its core documentation files have been created to establish a foundation for project knowledge.
+- v2 rebuild: dropped the `$40PCT` token; added the globe intro, `RingmasterMap`, the `/report` map, and the `/sources` page.
+- The hardening pass above.
 
 ## Next Steps
-
-*   **Component Analysis:** The next step is to analyze the implementation of each thematic component (`Header`, `Hero`, `Ringmasters`, `SilentPartners`, `TheAudience`, `TokenSection`, `Footer`) to understand their specific content and functionality.
-*   **Update `progress.md`:** After analyzing the components, `progress.md` will be updated with a more accurate assessment of the project's completeness.
+- Wire live data scrapers (MyNeta / ADR / PRS) to replace illustrative figures in `src/data/states.ts`.
+- Persist upvotes (a `report_upvotes` table — currently optimistic/local only).
+- Photo uploads for reports (Supabase Storage bucket + `photo_url`).
+- Moderation: flag-threshold hiding, profanity filter.
+- Marker clustering on the report map for scale.

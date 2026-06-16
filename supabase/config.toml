@@ -1,1 +1,6 @@
 project_id = "ecnulgfcwsurohgfizrs"
+
+# The report submission endpoint is public (no auth) — it does its own
+# validation and IP rate-limiting internally.
+[functions.submit-report]
+verify_jwt = false

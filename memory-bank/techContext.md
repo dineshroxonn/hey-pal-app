@@ -1,35 +1,28 @@
-# Tech Context: Hey Pal App
+# Tech Context: The Great Indian Circus
 
 ## Technologies Used
-
-*   **Core Framework:** React 18
-*   **Language:** TypeScript 5
-*   **Build Tool:** Vite 5
-*   **Package Manager:** bun (inferred from `bun.lockb`)
-*   **Styling:** Tailwind CSS 3
-*   **Routing:** React Router DOM 6
-*   **Linting:** ESLint 9
+- **Core Framework:** React 18
+- **Language:** TypeScript 5
+- **Build Tool:** Vite 5 (`@vitejs/plugin-react-swc`)
+- **Styling:** Tailwind CSS 3 + shadcn/ui (Radix UI)
+- **Routing:** React Router DOM 6
+- **Linting:** ESLint 9 (flat config, `typescript-eslint`)
+- **Package Manager:** npm (`package-lock.json`; a legacy `bun.lockb` is also present)
 
 ## Key Dependencies
+- **3D:** `three`, `@react-three/fiber`, `@react-three/drei` — the intro globe (`CircusGlobe`).
+- **Maps:** `leaflet`, `react-leaflet` — the `/report` map (free OpenStreetMap tiles).
+- **Backend:** `@supabase/supabase-js` — `reports` table, realtime, and the `submit-report` edge function.
+- **Forms/validation:** `react-hook-form` (available) + `zod` (used for report validation).
+- **Data fetching:** `@tanstack/react-query` provider is mounted but currently unused for fetching.
+- **UI:** `@radix-ui/*`, `lucide-react` (icons), `class-variance-authority`, `clsx`, `tailwind-merge`, `sonner` (toasts), `next-themes`.
 
-*   **UI Components:**
-    *   `@radix-ui/*`: A collection of unstyled, accessible UI components that form the foundation of the `components/ui` library.
-    *   `shadcn/ui` (inferred): The structure of `components/ui` and the use of Radix UI, `clsx`, and `tailwind-merge` are strong indicators of `shadcn/ui`.
-    *   `lucide-react`: For icons.
-*   **Blockchain Integration:**
-    *   The project features the `$40PCT` token, which is a meme token on the Solana blockchain.
-*   **State Management & Data Fetching:**
-    *   `@tanstack/react-query`: For managing server state, including caching, refetching, and optimistic updates.
-*   **Forms:**
-    *   `react-hook-form`: For building and managing forms.
-    *   `zod`: For schema validation, used with `react-hook-form`.
-*   **Utilities:**
-    *   `clsx` & `tailwind-merge`: For constructing dynamic and conflict-free class names with Tailwind CSS.
-    *   `date-fns`: For date manipulation.
-    *   `recharts`: For creating charts.
+## Environment
+- `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` enable live reports (see `.env.example`). Absent → client uses inert placeholders and reports stay empty.
+- Edge function env (provided by Supabase): `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, optional `RATE_LIMIT_SALT`.
 
 ## Development Setup
-
-*   **Run Development Server:** `bun run dev`
-*   **Build for Production:** `bun run build`
-*   **Linting:** `bun run lint`
+- **Run:** `npm run dev` (port 8080)
+- **Build:** `npm run build`
+- **Lint:** `npm run lint`
+- **Supabase:** migrations in `supabase/migrations/`, edge function in `supabase/functions/submit-report/`; deployed by Lovable on sync.
